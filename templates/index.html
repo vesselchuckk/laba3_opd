@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Калькулятор квадратных уравнений</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+<body>
+    <h1>Решение квадратных уравнений</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label>Введите коэффициенты:</label>
+            <input type="number" step="any" name="a" value="{{ a or '' }}" required> x² + 
+            <input type="number" step="any" name="b" value="{{ b or '' }}" required> x + 
+            <input type="number" step="any" name="c" value="{{ c or '' }}" required> = 0
+        </div>
+        <button type="submit">Решить</button>
+    </form>
+
+    {% if error %}
+        <div class="result error">
+            {{ error }}
+        </div>
+    {% elif roots is not none %}
+        <div class="result">
+            <h3>Результат:</h3>
+            {% if roots|length == 0 %}
+                <p>Действительных корней нет</p>
+            {% elif roots|length == 1 %}
+                <p>Уравнение имеет один корень: x = {{ roots[0] }}</p>
+            {% else %}
+                <p>Корни уравнения: x₁ = {{ roots[0] }}, x₂ = {{ roots[1] }}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
